@@ -1,5 +1,5 @@
 import requests
-from configurations.config import dhs_base_url  # Import the base URL from your config module
+from api.configurations.config import dhs_base_url  # Import the base URL from your config module
 
 class APIClient:
     def __init__(self):

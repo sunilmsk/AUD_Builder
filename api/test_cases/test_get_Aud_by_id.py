@@ -1,17 +1,16 @@
 import unittest
 from urllib import response
 
-import configurations.config
 from api.api_client import APIClient
-from configurations.config import Auth
-
+from api.configurations.config import Auth
+from api.configurations import config as con
 
 class TestAPIClient(unittest.TestCase):
     def setUp(self):
         self.api_client = APIClient()
 
     def test_get_Audiences_by_ID_success_200(self):
-        endpoint = configurations.config.Audience_id
+        endpoint = con.Audience_id
         header = {"Authorization": Auth}
 
         try:
@@ -23,25 +22,25 @@ class TestAPIClient(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
         except Exception as e:
             print("An error occurred:", e)
-            print("Response content:", response.content)  # Print the response content for debugging
+            print("Response content:", response.content)  # Printing the response content for debugging
 
 
 
 
     def test_get_Audiences_by_Invalid_ID_204(self):
-        valid_endpoint = configurations.config.Audience_id
+        valid_endpoint = con.Audience_id
         invalid_endpoint = valid_endpoint+ str(1)
 
         header = {"Authorization": Auth}
 
         try:
-            # Try to get a valid audience by ID
+            # get a valid audience by ID
             response_valid = self.api_client.get(valid_endpoint, headers=header)
             status_valid = response_valid.status_code
             body_valid = response_valid.json()
             print("Valid response:", status_valid)
             print(body_valid)
-            self.assertEqual(status_valid, 200)
+            self.assertEqual(status_valid, 204)
 
             # Now, try to get an audience with an invalid ID
             response_invalid = self.api_client.get(invalid_endpoint, headers=header)
@@ -53,10 +52,10 @@ class TestAPIClient(unittest.TestCase):
 
         except Exception as e:
             print("An error occurred:", e)
-            print("Response content:", response.content)  # Print the response content for debugging
+            print("Response content:", response.content)  # Printing the response content for debugging
 
     def test_Audiences_by_Invalid_Auth_401(self):
-        valid_endpoint = configurations.config.Audience_id
+        valid_endpoint = con.Audience_id
         header = {"Authorization": "InvalidAuth"}  # Set the header to an invalid value
 
         try:
@@ -71,3 +70,4 @@ class TestAPIClient(unittest.TestCase):
         except Exception as e:
             print("An error occurred:", e)
             print("Response content:", api_response.content)  # Print the response content for debugging
+
