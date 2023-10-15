@@ -1,42 +1,14 @@
-import selenium.webdriver
+import datetime
+
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
-class Login:
-
-    email_text_xpath="//input[@id='i0116']"
-    next_button_xpath="//input[@id='idSIButton9']"
-    password_text_xpath="//input[@id='i0118']"
-    forget_password_xpath="//a[@id='idA_PWD_ForgotPassword']"
-    sign_in_with_security_key_xpath="//a[@id='idA_PWD_SwitchToFido']"
-    sign_in_button_xpath="//input[@id='idSIButton9']"
-    dont_show_checkbox_xpath="//input[@id='KmsiCheckboxField']"
-    dont_show_yes_button_xpath="//input[@id='idSIButton9']"
-
-
+class Utils:
     def __init__(self, driver):
         self.driver = driver
-
-
-    def set_username(self, username):
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.visibility_of_element_located((By.XPATH, self.email_text_xpath))).clear()
-        self.driver.find_element(By.XPATH, self.email_text_xpath).send_keys(username)
-
-    def click_next_button(self):
-        self.driver.find_element(By.XPATH, self.next_button_xpath).click()
-
-    def set_password(self, password):
-        self.driver.find_element(By.XPATH, self.password_text_xpath).clear()
-        self.driver.find_element(By.XPATH, self.password_text_xpath).send_keys(password)
-
-
-    def click_signin_button(self):
-        self.driver.find_element_by_xpath(self.sign_in_button_xpath).click()
 
     def wait_for_element_visible(self, locator_type, value, timeout=10):
         try:
@@ -65,3 +37,13 @@ class Login:
         except TimeoutException:
             print(f"Element with {locator_type}: '{value}' did not become visible within {timeout} seconds.")
             return None
+
+    def take_screenshot(self):
+        # Get the current date and time with milliseconds
+        current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S-%f")
+
+        # Define the filename with a ".png" extension
+        filename = fr"C:\Users\sunil.mekala\PycharmProjects\Audience_Builder\web\screen_shots/screenshot_{current_time}.png"
+
+        # Take a screenshot and save it
+        self.driver.save_screenshot(filename)

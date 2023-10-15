@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from web.page_objects.LoginPage import Login
+from web.utils.utilities import Utils
 
 
 class TestLogin:
@@ -24,7 +25,9 @@ class TestLogin:
         time.sleep(15)
         self.LP = Login(self.driver)
         self.LP.set_username(self.username)
-        self.LP.wait_for_element_visible("XPATH", self.LP.click_next_button(), 10)
+        # self.LP.wait_for_element_visible("XPATH", self.LP.click_next_button(), 10)
+        self.util = Utils(self.driver)
+        self.util.wait_for_element_visible("XPATH", self.LP.click_next_button(), 10)
         time.sleep(10)
         self.LP.set_password(self.password)
         time.sleep(2)
@@ -36,9 +39,4 @@ class TestLogin:
         print("Current page title: ", current_title)
         time.sleep(3)
         assert current_title == "Sharecare Admin Console", "Login Failed"
-
-
-
-
-
-
+        self.util.take_screenshot()
