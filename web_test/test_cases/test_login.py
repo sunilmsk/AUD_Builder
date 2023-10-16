@@ -1,12 +1,9 @@
 import time
-import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-from web.page_objects.LoginPage import Login
-from web.utils.utilities import Utils
+from web_test.page_objects.LoginPage import Login
+from web_test.utils.utilities import Utils
 
 
 class TestLogin:
@@ -39,4 +36,5 @@ class TestLogin:
         print("Current page title: ", current_title)
         time.sleep(3)
         assert current_title == "Sharecare Admin Console", "Login Failed"
+        print("user is successfully landed on Care console admin dashboard page...")
         self.util.take_screenshot()
